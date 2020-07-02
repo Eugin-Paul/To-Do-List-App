@@ -1,0 +1,41 @@
+{% load static %}
+
+<html>
+<head>
+  <title>TODO App</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" type = "text/css"  href = "{% static 'todo/style1.css' %}" >
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+  <div class = "border">
+  <form action = "{% url 'add' %}" method = "POST">
+    <div class = "search">
+      {% csrf_token %}
+      <!-- <input type ="text" class = "textfield" > -->{{form.text}}
+      <button type = "submit" class = "add" > ADD </button>
+      </div>
+      <div class = "delete_completed">
+        <br /><a href = "{% url 'delete_completed' %}" > <button type = "button" > <i class="fa fa-trash"> </i>  Delete Completed </button> </a>
+      </div>
+      <div class = "delete_all">
+        <br /><a href = "{% url 'delete_all' %}" > <button type = "button" > <i class="fa fa-trash"> </i>  Delete All </button> </a>
+      </div>
+      <div class = "todo_box"><br /><br />
+        <ol>
+
+
+          {% for todo in todo_list %}
+          {% if todo.complete %}
+          <a href = "#"><li class = "completed">{{todo.text}}</li></a><hr/>
+          {% else %}
+          <a href ="{% url 'completed' todo.id %}"> <li class = "not_completed">{{todo.text}}</li></a><hr/>
+          {% endif %}
+          {% endfor %}
+        </ol>
+     </div>
+     <div class = "body">
+     </div>
+   </div>
+    </body>
+</html>
